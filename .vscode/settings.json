@@ -1,0 +1,33 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "pyproject.toml": true,
+        "README.md": true,
+        "uv.lock": true,
+        ".gitignore": true,
+        ".python-version": true,
+        ".venv": true
+    },
+    "hide-files.files": [
+        "pyproject.toml",
+        "README.md",
+        "uv.lock",
+        ".gitignore",
+        ".python-version",
+        ".venv"
+    ],
+    "python.analysis.extraPaths": [
+        "./.venv/lib/python3.11/site-packages",
+        "C:/Users/YOUR_USER/AppData/Local/Programs/Python/Python311/Lib/site-packages/micropython_stm32_stubs"
+    ],
+    "python.autoComplete.extraPaths": [
+        "./.venv/lib/python3.11/site-packages",
+        "C:/Users/YOUR_USER/AppData/Local/Programs/Python/Python311/Lib/site-packages/micropython_stm32_stubs"
+    ],
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true
+}
