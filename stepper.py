@@ -4,28 +4,28 @@ import time
 class DoubleStepper:
     def __init__(self, s1_pins, s2_pins):
         self.s1_pins = (pyb.Pin(s1_pins[0], pyb.Pin.OUT_PP), pyb.Pin(s1_pins[1], pyb.Pin.OUT_PP))
-        self.s2_pins = (pyb.Pin(s2_pins[0], pyb.Pin.OUT_PP), pyb.Pin(s2_pins[1], pyb.Pin.OUT_PP))
+        # self.s2_pins = (pyb.Pin(s2_pins[0], pyb.Pin.OUT_PP), pyb.Pin(s2_pins[1], pyb.Pin.OUT_PP))
         
         self.s1_position = 0
-        self.s2_position = 0
+        # self.s2_position = 0
         
     def set_step_high(self):
         self.s1_pins[0].high()
-        self.s2_pins[0].high()
+        # self.s2_pins[0].high()
         
     def set_step_low(self):
         self.s1_pins[0].low()
-        self.s2_pins[0].low()
+        # self.s2_pins[0].low()
         
     def set_dir_high(self):
         self.s1_pins[1].high()
-        self.s2_pins[1].high()
+        # self.s2_pins[1].high()
         
     def set_dir_low(self):
         self.s1_pins[1].low()
-        self.s2_pins[1].low()
+        # self.s2_pins[1].low()
         
-    def move(self, steps, speed_delay=0.0001):
+    def move(self, steps, speed_delay=0.005):
         if steps > 0:
             self.set_dir_high()
             direction = 1
@@ -39,8 +39,12 @@ class DoubleStepper:
             time.sleep_us(2) # type: ignore
             self.set_step_low()
             
-            self.position += direction
+            self.s1_position += direction
+            # self.s2_position += direction
             
             time.sleep(speed_delay)
             
         
+if __name__ == "__main__":
+    stepper = DoubleStepper(["D3", "D2"], ["D4", "D5"])
+    stepper.move(-6400)
