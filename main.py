@@ -1,21 +1,48 @@
+from servo import ServoArray
+from stepper import DoubleStepper
 import time
-from servo_array import Servo_Array
-from servo import Servo
 
-# 1. Pick your pin
-PINS = ["D2", "D6"]
+class Tactile:
+    def __init__(self) -> None:
+        MY_ROBOT_PINS = [
+            "D13", "D2", "D5", "A7", "D7", "D15", "D3"
+        ]
 
-# servo = Servo("D2", min_us=500, max_us=2600)
-# servo.set_angle(0)
-# time.sleep(2.5)
-# servo.set_angle(180)
-# time.sleep(2.5)
+        self.robot = ServoArray(pin_order=MY_ROBOT_PINS)
+        self.gantry = DoubleStepper(["D50", "D51"])
 
-servo_array = Servo_Array(PINS, [0, 0], 2)
-servo_array.move_servos([0.0, 0.0])
-time.sleep(1.0)
-servo_array.move_servos([0.0, 1.0])
-time.sleep(1.0)
-servo_array.move_servos([0.0, 0.0])
+    def drop_rack(self):
+        self.robot.move_all_norm([0] * 7)
+        
+    def move_next_row(self):
+        self.gantry.move(1000)
+        
+    def run_loop(self, setpoints_list):
+        for row in setpoints_list:
+            self.move_next_row()
+            time.sleep(1)
+            self.robot.move_all_norm(row)
+            time.sleep(1)
+            
+    def reset_rack(self):
+        self.robot.move_all_norm([0.0] * 7)
+        
+    def move_gantry_far(self):
+        self.gantry.move(-300)
 
-print("Servo DONE!")
+if __name__ == "__main__":
+    sample_setpoints = [
+        [1, 0, 1, 0, 1, 0, 1],
+        [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0.25, 0.5, 0.75, 0.15, 0.25, 0.15, 0.8],
+        [1, 0, 1, 0, 1, 0, 1],
+        [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+        [0.25, 0.5, 0.75, 0.15, 0.25, 0.15, 0.8],
+        [0, 0, 0, 0, 0, 0, 0]
+    ]
+    
+    board = Tactile()
+    # board.run_loop(sample_setpoints)
+    board.reset_rack()
+    # time.sleep(1)
+    # board.move_gantry_far()
