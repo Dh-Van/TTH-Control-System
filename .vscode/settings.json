@@ -10,7 +10,11 @@
         "uv.lock": true,
         ".gitignore": true,
         ".python-version": true,
-        ".venv": true
+        ".venv": true,
+        ".vscode": true,
+        "@+": true,
+        "bash_command": true,
+        "gen_map.py": true
     },
     "hide-files.files": [
         "pyproject.toml",
@@ -18,7 +22,11 @@
         "uv.lock",
         ".gitignore",
         ".python-version",
-        ".venv"
+        ".venv",
+        ".vscode",
+        "@+",
+        "bash_command",
+        "gen_map.py"
     ],
     "python.analysis.extraPaths": [
         "./.venv/lib/python3.11/site-packages",

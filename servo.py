@@ -15,7 +15,7 @@ class Servo:
             _TIMER_POOL[tid] = pyb.Timer(tid, freq=50)
             
         self.tim = _TIMER_POOL[tid]
-        self.pin = pyb.Pin(pin_name, mode=pyb.Pin.ALT, af=af_idx)
+        self.pin = pyb.Pin(pin_name, mode=pyb.Pin.ALT, af=af_idx) # type: ignore
         
         # Explicitly setting Timer.PWM here is key
         self.ch = self.tim.channel(chid, pyb.Timer.PWM, pin=self.pin)
@@ -91,21 +91,13 @@ class ServoArray:
         _TIMER_POOL.clear() # Clear the registry for fresh starts
         print("Hardware Timers destroyed.")
         
-# D8, D12, D9, D15, D17, D19. D20, A2,    no work
-# D2, D3, D6, D13, D15, A7, D7, D5, D11
+
 if __name__ == "__main__":
-    test_servo = Servo("D7")
+    test_servo = Servo("D2")
     test_servo.set_angle(0)
     time.sleep(1)
     test_servo.set_angle(160)
     time.sleep(1)
+    test_servo.set_angle(0)
+    time.sleep(1)
     
-'''
-D13
-D2
-D5
-A7
-D7
-D15
-D3
-'''
